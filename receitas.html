@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Receitas</title>
+    <style>
+        header{
+            background-color: antiquewhite;
+            padding: 10px;
+        }
+        div#pnlCatalogo{
+            justify-content: center;
+        }
+        div.card{
+            margin: 20px;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-warning" onload="preencheCatalogo()">
+    <header>
+        <h1>Catálogo de Receitas</h1>
+    </header>
+    <main class="container-fluid">
+        <div style="display: flex; flex-wrap: wrap;" id="pnlCatalogo">
+        </div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script>
+
+
+    
+
+        function getListaIngredientes(receita){
+            
+                var lista = document.createElement('ul')
+                lista.innerHTML += (receita['ingredientes']).map(item => `<li>${item}</li>`).join('')      
+
+            return lista
+        }
+
+        function getCard(receita){
+
+                var card = document.createElement('div')
+                card.setAttribute('class', 'card')
+                card.setAttribute('style', 'width: 250px')
+
+                var img = document.createElement('img')
+                img.setAttribute('src', receita['imagem'])
+                img.setAttribute('class', 'card-img-top')
+                card.appendChild(img)
+
+                var cbody = document.createElement('div')
+                cbody.setAttribute('class', 'card-body')
+                card.appendChild(cbody)
+
+                var h2 = document.createElement('h2')
+                h2.setAttribute('class', 'card-title')
+                h2.textContent = receita['titulo']
+                cbody.appendChild(h2)
+
+                var lista = getListaIngredientes(receita)
+                cbody.appendChild(lista)
+
+                var hr = document.createElement('hr')
+                cbody.appendChild(hr)
+
+                var preparo = document.createElement('p')
+                preparo.setAttribute('class', 'card-text')
+                preparo.textContent = receita['preparo']
+                cbody.appendChild(preparo)
+                
+                return card
+        }
+
+        function preencheCatalogo(){
+
+            const receitas = [
+                    {
+                        "titulo": "Arroz de Couve-flor",
+                        "imagem": "imagens/arroz-couve-flor.png",
+                        "preparo": "Deixe a couve-flor picada. Adicione os ingredientes e refogue bem. Adicione sal, tampe a panela e deixe cozinhar.",
+                        "ingredientes": ["Arroz", "Couve-Flor", "Cebola Média", "Azeite"]
+                    },
+                    {
+                        "titulo": "Bolo de Café",
+                        "imagem": "imagens/Bolo-cafe.png",
+                        "preparo": "Bata o çúcar, as gemas e o café. Adicione farinha e chocolate e mexa bem. Bata as claras e junte à mistura.",
+                        "ingredientes": ["Farinha de Trigo", "Açúcar", "Café Coado", "Chocolate em Pó", "Ovos"]
+                    },
+                    {
+                        "titulo": "Coxinha de Brigadeiro",
+                        "imagem": "imagens/Coxinha-brigadeiro.png",
+                        "preparo": "Junte o leite condensado, chocolate em pó e manteiga. Aqueça no fogo baixo. Envolva os morangos e passe no granulado",
+                        "ingredientes": ["Leite Condensado", "Chocolate me Pó", "Manteiga", "Morango", "Chocolate Granulado"]
+                    }
+                ]
+            
+            for (let i = 0; i < receitas.length; i++) {
+                var Receita = getCard(receitas[i])
+                document.getElementById('pnlCatalogo').appendChild(Receita)
+            }
+        }
+    </script>
+</body>
+</html>
